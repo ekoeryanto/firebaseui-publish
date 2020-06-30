@@ -3,9 +3,9 @@
 
 name: Node.js Package
 
-on: [push, pull_request]
-#   schedule:
-#     - cron: '0 18 * * *'
+on:
+  schedule:
+    - cron: '30 21 * * *'
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - run: cd firebaseui-id && npm ci
-      - run: cd firebaseui-id && npm run build
+#       - run: cd firebaseui-id && npm run build
       - run: cd firebaseui-id && npm run build build-js-id && npm run build build-esm-id && npm run build build-npm-id
       - run: cd firebaseui-id && npm publish
         env:
