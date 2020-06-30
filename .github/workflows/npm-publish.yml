@@ -26,13 +26,21 @@ jobs:
               then 
                 git clone --depth=1 --branch v`npm info firebaseui version` https://github.com/firebase/firebaseui-web.git firebaseui-id
                 node ./prepare.js
+                cd firebaseui-id
               fi
+      - name: Get npm cache directory
+        id: npm-cache
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.npm-cache.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - run: cd firebaseui-id && npm ci
       - run: cd firebaseui-id && npm run build
       - run: cd firebaseui-id && npm run build build-js-id && npm run build build-esm-id && npm run build build-npm-id
       - run: cd firebaseui-id && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-      - run: cd firebaseui-id && npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
