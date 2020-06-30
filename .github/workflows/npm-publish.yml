@@ -27,6 +27,11 @@ jobs:
                 node ./prepare.js
               fi
       - run: cd firebaseui-id
+      - name: Archive cloned artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: firebaseui-id
+          path: firebaseui-id
   build:
     if: success()
     needs: prepare
@@ -36,6 +41,10 @@ jobs:
         shell: bash
         working-directory: ./firebaseui-id
     steps:
+      - name: Download cloned src
+        uses: actions/download-artifact@v1
+        with:
+          name: firebaseui-id
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
@@ -53,6 +62,10 @@ jobs:
       run:
         working-directory: './firebaseui-id'
     steps:
+      - name: Download cloned src
+        uses: actions/download-artifact@v1
+        with:
+          name: firebaseui-id
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
@@ -71,6 +84,10 @@ jobs:
       run:
         working-directory: './firebaseui-id'
     steps:
+      - name: Download cloned src
+        uses: actions/download-artifact@v1
+        with:
+          name: firebaseui-id
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
