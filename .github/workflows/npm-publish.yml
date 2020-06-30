@@ -26,6 +26,7 @@ jobs:
               then 
                 git clone --depth=1 --branch v`npm info firebaseui version` https://github.com/firebase/firebaseui-web.git firebaseui-id
                 node ./prepare.js
+                cp README.template firebaseui-id/README.md
                 cd firebaseui-id
               fi
       - name: Get npm cache directory
