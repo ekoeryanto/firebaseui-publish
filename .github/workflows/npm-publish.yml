@@ -26,7 +26,6 @@ jobs:
                 git clone --depth=1 --branch v`npm info firebaseui version` https://github.com/firebase/firebaseui-web.git firebaseui-id
                 node ./prepare.js
               fi
-      - run: cd firebaseui-id
       - name: Archive cloned artifacts
         uses: actions/upload-artifact@v1
         with:
@@ -48,6 +47,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10
+      - run: ls ./*
       - run: cd firebaseui-id && npm ci
       - run: cd firebaseui-id && npm run build
       - run: cd firebaseui-id && npm run build-js-id
