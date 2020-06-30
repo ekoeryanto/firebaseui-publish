@@ -1,6 +1,6 @@
 const fs = require('fs')
-
-const pkg = require('./firebaseui-id/package.json')
+const pkgPath = './firebaseui-id/package.json'
+const pkg = require(pkgPath)
 
 pkg.name = 'firebaseui-id'
 pkg.files = [
@@ -23,4 +23,4 @@ pkg.browser = "./dist/firebaseui__id.js"
 delete pkg.publishConfig
 delete pkg.scripts.prepublish
 
-fs.writeFileSync('./package.json', JSON.stringify(pkg, null, 2))
+fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2))
