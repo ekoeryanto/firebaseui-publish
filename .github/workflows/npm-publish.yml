@@ -8,12 +8,11 @@ on: [push, pull_request]
 #     - cron: '0 18 * * *'
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
-        working-directory: ./
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -27,9 +26,27 @@ jobs:
                 git clone --depth=1 --branch v`npm info firebaseui version` https://github.com/firebase/firebaseui-web.git firebaseui-id
                 node ./prepare.js
               fi
-      - run: cd firebaseui-id && npm ci
-      - run: cd firebaseui-id && npm run build build-js-id && npm run build-npm-id && npm run build-esm-id
+      - run: cd firebaseui-id
+  build:
+    if: success()
+    needs: prepare
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./firebaseui-id
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - run: npm ci
+      - run: npm run build
+      - run: npm run build-js-id
+      - run: npm run build build-npm-id
+      - run: npm run build-esm-id
   publish-npm:
+    if: success()
     needs: build
     runs-on: ubuntu-latest
     defaults:
@@ -47,6 +64,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
   publish-gpr:
+    if: success()
     needs: build
     runs-on: ubuntu-latest
     defaults:
