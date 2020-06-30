@@ -28,7 +28,7 @@ jobs:
                 node ./prepare.js
                 cd firebaseui-id
               fi
-      - run: npm ci
+      - run: cd firebaseui-id && npm ci
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
