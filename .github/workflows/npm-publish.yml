@@ -26,9 +26,9 @@ jobs:
               then 
                 git clone --depth=1 --branch v`npm info firebaseui version` https://github.com/firebase/firebaseui-web.git firebaseui-id
                 node ./prepare.js
-                cd firebaseui-id
               fi
       - run: cd firebaseui-id && npm ci
+      - run: cd firebaseui-id && npm run build build-js-id && npm run build-npm-id && npm run build-esm-id
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
