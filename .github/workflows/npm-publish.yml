@@ -3,9 +3,9 @@
 
 name: Update and Publish firebaseui-id
 
-on:
-  schedule:
-    - cron: '0 1 * * *'
+on: [push]
+#   schedule:
+#     - cron: '0 1 * * *'
 
 jobs:
   build:
@@ -38,7 +38,10 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - run: |
+      - name: "Install, build and publish"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        run: |
               if [[ -d firebaseui-id ]]
               then
                 cd firebaseui-id
@@ -47,6 +50,3 @@ jobs:
                 npm run build build-js-id && npm run build build-esm-id && npm run build build-npm-id
                 npm publish
               fi
-    
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
