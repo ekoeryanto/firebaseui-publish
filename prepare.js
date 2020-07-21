@@ -15,7 +15,7 @@ pkg.files = [
   "package.json"
 ]
 
-pkg.repository = 'github:ekoeryanto/firebaseui-web'
+pkg.repository = 'github:ekoeryanto/firebaseui-publish'
 pkg.main = "./dist/npm__id.js",
 pkg.module = "./dist/esm__id.js",
 pkg.browser = "./dist/firebaseui__id.js"
