@@ -3,9 +3,10 @@
 
 name: Update and Publish firebaseui-id
 
-on:
-  schedule:
-    - cron: '0 1 * * *'
+on: 
+  push
+  #schedule:
+  # - cron: '0 1 * * *'
 
 jobs:
   build:
