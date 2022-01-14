@@ -3,10 +3,16 @@
 
 name: Update and Publish firebaseui-id
 
-on: 
-  push
-  #schedule:
-  # - cron: '0 1 * * *'
+on:
+  workflow_run: 
+    workflows: [build]
+    types: [requested]
+  push: 
+    branches:
+      - master
+      - main
+  schedule:
+   - cron: '0 1 * * *'
 
 jobs:
   build:
